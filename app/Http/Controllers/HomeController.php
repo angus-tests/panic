@@ -11,9 +11,7 @@ class HomeController extends Controller
     {
         return view('welcome', [
             'reports' => [
-                ["name" => "Bob", "location" => "London", "time" => "12:45"],
-                ["name" => "Charlie", "location" => "Essex", "time" => "15:05"],
-                ["name" => "Dave", "location" => "Sheffield", "time" => "19:12"]
+
             ]
         ]);
     }

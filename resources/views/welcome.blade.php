@@ -40,7 +40,8 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <th colspan="4">No reports</th>
+                                            <td colspan="4" class="whitespace-nowrap px-3 py-4 text-sm text-green-700 text-center">No reports</td>
+
                                         </tr>
                                     @endforelse
 
