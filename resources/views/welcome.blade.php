@@ -1,5 +1,8 @@
+@section('title', 'Panic')
+
 <x-public-layout>
     <x-page-container>
+
         <x-page-title title="Welcome to Panic" subtitle="A panic reporting website" />
 
         <div>

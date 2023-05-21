@@ -34,6 +34,6 @@ class ReportController extends Controller
         ]);
 
         // Return a 201 response
-        return response(null, 201);
+        return response(null, 200);
     }
 }
