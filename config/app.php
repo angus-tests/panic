@@ -18,6 +18,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    // Firmware version
+    'firmware_version' => env('FIRMWARE_VERSION', 1),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
