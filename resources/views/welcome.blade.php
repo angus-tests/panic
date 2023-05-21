@@ -22,7 +22,7 @@
                                 <table class="min-w-full divide-y divide-gray-300">
                                     <thead class="bg-gray-50">
                                     <tr>
-                                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
+                                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Device</th>
                                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
                                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Time</th>
                                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -38,7 +38,7 @@
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report->long . " " . $report->lat}}</td>
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report->created_at}}</td>
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                <a href="#" class="text-indigo-600 hover:text-indigo-900">View<span class="sr-only">, {{$report->name}}</span></a>
+                                                <a target="_blank" href="https://maps.google.com/?q={{$report->long}},{{$report->lat}}" class="text-indigo-600 hover:text-indigo-900">View<span class="sr-only">, {{$report->name}}</span></a>
                                             </td>
                                         </tr>
                                     @empty
