@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function index(Request $request): View
     {
         return view('welcome', [
-            'reports' => Report::all()
+            'reports' => Report::orderBy('created_at', 'desc')->get()
         ]);
     }
 }
