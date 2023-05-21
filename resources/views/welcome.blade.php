@@ -38,7 +38,7 @@
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report->long . " " . $report->lat}}</td>
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report->created_at}}</td>
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                <a target="_blank" href="https://maps.google.com/?q={{$report->long}},{{$report->lat}}" class="text-indigo-600 hover:text-indigo-900">View<span class="sr-only">, {{$report->name}}</span></a>
+                                                <a target="_blank" href="https://maps.google.com/?q={{$report->lat}}, {{$report->long}}" class="text-indigo-600 hover:text-indigo-900">View<span class="sr-only">, {{$report->name}}</span></a>
                                             </td>
                                         </tr>
                                     @empty
