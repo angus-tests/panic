@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
@@ -15,6 +16,8 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('Received POST request:', $request->all());
+
         // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required',
