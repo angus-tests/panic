@@ -31,11 +31,11 @@
                                     @forelse($reports as $report)
                                         <tr>
                                         <tr>
-                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$report["name"]}}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report["location"]}}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report["time"]}}</td>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$report->name}}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report->long . " " . $report->lat}}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report->created_at}}</td>
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                <a href="#" class="text-indigo-600 hover:text-indigo-900">View<span class="sr-only">, {{$report["name"]}}</span></a>
+                                                <a href="#" class="text-indigo-600 hover:text-indigo-900">View<span class="sr-only">, {{$report->name}}</span></a>
                                             </td>
                                         </tr>
                                     @empty
