@@ -48,6 +48,10 @@ class FirmwareController extends Controller
             }
 
             $version = $latestVersion;
+        }else{
+
+            // Remove any trailing 0's but preserve non 0 decimals
+            $version = number_format($version, ($version != intval($version)) ? 2 : 0);
         }
 
         // Attempt to find the binary in the public folder
