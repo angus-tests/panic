@@ -10,8 +10,12 @@ class HomeController extends Controller
 {
     public function index(Request $request): View
     {
+        $reports = Report::orderBy('created_at', 'desc')->get();
+        $apiKey = env('GOOGLE_API_KEY');
+
         return view('welcome', [
-            'reports' => Report::orderBy('created_at', 'desc')->get()
+            'reports' => $reports,
+            'apiKey' => $apiKey
         ]);
     }
 }
