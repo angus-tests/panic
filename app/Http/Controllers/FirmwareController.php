@@ -23,12 +23,11 @@ class FirmwareController extends Controller
 
         // Get the latest firmware
         if ($version === "latest") {
-            // Logic when version is not provided
-            // For example, you can retrieve the latest firmware version from the environment variable
 
             $latestVersion = config('app.firmware_version');
             $firmwareFiles = glob(public_path('firmware/*.bin'));
 
+            // Attempt to find the biggest firmware version
             foreach ($firmwareFiles as $file) {
                 $filename = basename($file);
                 $fileVersion = (int) pathinfo($filename, PATHINFO_FILENAME);
