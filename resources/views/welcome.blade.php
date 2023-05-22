@@ -5,11 +5,11 @@
 
         <x-page-title title="Welcome to Panic" subtitle="A panic reporting website" />
 
-        <div class="flex flex-col gap-y-10">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 px-4 sm:px-6 justify-center">
 
-            @if(count($reports) > 1)
+            @if(count($reports) > 0)
                 <!-- Map -->
-                <div class="px-4 sm:px-6 lg:px-8">
+                <div class="lg:col-span-3">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
                             <h2 class="text-base font-semibold leading-6 text-gray-900">Map</h2>
@@ -18,12 +18,12 @@
                     </div>
 
                     <!-- Google maps -->
-                    <div class="mt-8" style="height: 600px;" id="map"></div>
+                    <div class="mt-8 border" style="height: 600px;" id="map"></div>
                 </div>
             @endif
 
             <!-- Reports table -->
-            <div class="px-4 sm:px-6 lg:px-8">
+            <div class="{{ count($reports) > 0 ? 'lg:col-span-2' : 'col-span-full'  }}">
                 <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
                         <h2 class="text-base font-semibold leading-6 text-gray-900">Reports</h2>
@@ -51,24 +51,24 @@
                                         <tr>
                                         <tr>
                                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$report->name}}</td>
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report->long . " " . $report->lat}}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report->long}} <br> {{$report->lat}}</td>
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$report->created_at}}</td>
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                 @if($report->status == "new")
-                                                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">NEW</span>
+                                                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">NEW</span>
 
                                                 @elseif($report->status == "viewed")
-                                                    <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Viewed</span>
+                                                    <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Viewed</span>
 
                                                 @elseif($report->status == "solved")
-                                                    <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Solved</span>
+                                                    <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Solved</span>
                                                 @else
-                                                    <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">NA</span>
+                                                    <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">NA</span>
                                                 @endif
 
                                             </td>
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                <a target="_blank" href="https://maps.google.com/?q={{$report->lat}}, {{$report->long}}" class="text-indigo-600 hover:text-indigo-900">View<span class="sr-only">, {{$report->name}}</span></a>
+                                                <a target="_blank" href="https://maps.google.com/?q={{$report->lat}}, {{$report->long}}" class="text-indigo-600 hover:text-indigo-900 text-xs">View<span class="sr-only">, {{$report->name}}</span></a>
                                             </td>
                                         </tr>
                                     @empty
@@ -89,7 +89,7 @@
         </div>
     </x-page-container>
 
-    @pushif(count($reports) > 1, "bottomScripts")
+    @pushif(count($reports) > 0, "bottomScripts")
 
         <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
             ({key: "{{$apiKey}}", v: "beta"});</script>
