@@ -16,6 +16,23 @@ class FirmwareController extends Controller
     }
 
     /**
+     * Dont return a JSON response
+     */
+    public function versionRaw(Request $request)
+    {
+        $version = config('app.firmware_version');
+
+        // Set the response headers
+        $headers = [
+            'Content-Type' => 'text/plain',
+            'Content-Disposition' => 'attachment; filename="version.txt"',
+        ];
+
+        // Return the file content as a response
+        return response($version, 200, $headers);
+    }
+
+    /**
      * Download firmware endpoint
      */
     public function download($version="latest")
