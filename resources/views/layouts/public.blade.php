@@ -23,8 +23,10 @@
         </main>
 
     </div>
+
     <!-- footer -->
     @include("includes.footer")
 
 </body>
+@stack("bottomScripts")
 </html>

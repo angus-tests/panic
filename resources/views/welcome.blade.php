@@ -5,13 +5,28 @@
 
         <x-page-title title="Welcome to Panic" subtitle="A panic reporting website" />
 
-        <div>
+        <div class="flex flex-col gap-y-10">
+
+            @if(count($reports) > 1)
+                <!-- Map -->
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="sm:flex sm:items-center">
+                        <div class="sm:flex-auto">
+                            <h2 class="text-base font-semibold leading-6 text-gray-900">Map</h2>
+                            <p class="mt-2 text-sm text-gray-700">A map showing the recent panic reports</p>
+                        </div>
+                    </div>
+
+                    <!-- Google maps -->
+                    <div class="mt-8" style="height: 600px;" id="map"></div>
+                </div>
+            @endif
 
             <!-- Reports table -->
             <div class="px-4 sm:px-6 lg:px-8">
                 <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
-                        <h1 class="text-base font-semibold leading-6 text-gray-900">Reports</h1>
+                        <h2 class="text-base font-semibold leading-6 text-gray-900">Reports</h2>
                         <p class="mt-2 text-sm text-gray-700">A list of recent panic reports</p>
                     </div>
                 </div>
@@ -58,7 +73,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="whitespace-nowrap px-3 py-4 text-sm text-green-700 text-center">No reports</td>
+                                            <td colspan="5" class="whitespace-nowrap px-3 py-4 text-sm text-green-700 text-center">No reports</td>
 
                                         </tr>
                                     @endforelse
@@ -73,4 +88,57 @@
 
         </div>
     </x-page-container>
+
+    @pushif(count($reports) > 1, "bottomScripts")
+
+        <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+            ({key: "{{$apiKey}}", v: "beta"});</script>
+
+        <script>
+            let map;
+
+            async function initMap() {
+                // The location of Uluru
+                const position = { lat: 53.3811, lng: 1.4701};
+                // Request needed libraries.
+                //@ts-ignore
+                const { Map } = await google.maps.importLibrary("maps");
+                const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+                // The map, centered at Uluru
+                map = new Map(document.getElementById("map"), {
+                    zoom: 4,
+                    center: position,
+                    mapId: "PANIC_MAP",
+                });
+
+                let markers = @json($reports);
+
+                markers.forEach(function(marker) {
+                    console.log("Plotting at: lat: "+marker.lat+" long: "+marker.long)
+                    new AdvancedMarkerElement({
+                        map: map,
+                        position: { lat: marker.lat, lng: marker.long},
+                        title: marker.name
+                    });
+                });
+
+                // Ensure the map contains all the markers
+                const bounds = new google.maps.LatLngBounds();
+                markers.forEach((marker) => {
+                    bounds.extend(new google.maps.LatLng(marker.lat, marker.long))
+                })
+                map.fitBounds(bounds)
+
+
+
+
+            }
+
+            initMap();
+
+        </script>
+    @endpushif
 </x-public-layout>
+
+
