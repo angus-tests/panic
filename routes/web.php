@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/firmware/version', [FirmwareController::class, 'version']);
+Route::get('/firmware/version', [FirmwareController::class, 'version'])->name('firmware.version');
+Route::get('/firmware/download/{version?}', [FirmwareController::class, 'download'])->name('firmware.download');
 
 Route::post('/reports', [ReportController::class, 'store'])->name("reports.store");
 

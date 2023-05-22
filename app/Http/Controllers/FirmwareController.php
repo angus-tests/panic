@@ -12,7 +12,14 @@ class FirmwareController extends Controller
     public function version(Request $request): \Illuminate\Http\JsonResponse
     {
         $version = config('app.firmware_version');
-        
         return response()->json(['version' => $version]);
+    }
+
+    /**
+     * Download firmware
+     */
+    public function download($version="latest")
+    {
+        return response()->json(['version to download' => $version]);
     }
 }
